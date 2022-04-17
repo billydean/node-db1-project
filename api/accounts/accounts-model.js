@@ -9,7 +9,7 @@ const getAll = () => {
 
 const getById = id => {
   // select * from accounts where id = x
-  return db('accounts').where({ 'id': id }).first();
+  return db('accounts').where('id', id).first();
 }
 
 const create = async account => {
