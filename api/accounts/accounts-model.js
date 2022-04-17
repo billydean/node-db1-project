@@ -1,21 +1,31 @@
+const db = require('../../data/db-config');
+//imported database for knex
+//below, commented sql syntax to be translated into knex
+
 const getAll = () => {
-  // DO YOUR MAGIC
+  // select * from accounts
+  return db('accounts');
 }
 
 const getById = id => {
-  // DO YOUR MAGIC
+  // select * from accounts where id = x
+  return db('accounts').where({ 'id': id }).first();
 }
 
-const create = account => {
-  // DO YOUR MAGIC
+const create = async account => {
+  // insert accounts (x,y,z) values (x,y,z)
+  const [id] = await db('accounts').insert(account);
+  return getById(id);
 }
 
-const updateById = (id, account) => {
-  // DO YOUR MAGIC
+const updateById = async (id, account) => {
+  // update accounts set (... = ...) where x=z
+  db('accounts').where('id', id).update
 }
 
 const deleteById = id => {
-  // DO YOUR MAGIC
+  // delete from accounts where id='id'
+  return db('accounts').where('id', id).delete();
 }
 
 module.exports = {
