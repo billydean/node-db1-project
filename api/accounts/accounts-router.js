@@ -12,31 +12,40 @@ router.get('/', async (req, res, next) => {
 })
 
 router.get('/:id', mid.checkAccountId, async (req, res, next) => {
-  res.json(req.account);
-})
-
-router.post('/', mid.checkAccountPayload, mid.checkAccountNameUnique,  (req, res, next) => {
-  // DO YOUR MAGIC
   try {
-    
+    const account = await Accounts.getById(req.params.id);
+    res.json(account);
   } catch (err) {
     next(err);
   }
 })
 
-router.put('/:id', mid.checkAccountId, mid.checkAccountPayload, (req, res, next) => {
-  // DO YOUR MAGIC
+router.post('/', mid.checkAccountPayload, mid.checkAccountNameUnique,  async (req, res, next) => {
   try {
-    
+    const createdAccount = await Accounts.create({
+      name: req.body.name.trim(),
+      budget: req.body.budget,
+    });
+    res.status(201).json(createdAccount);
+  } catch (err) {
+    next(err);
+  }
+})
+
+router.put('/:id', mid.checkAccountId, mid.checkAccountPayload, async (req, res, next) => {
+  try {
+    const updated = await Accounts.updateById(req.params.id, req.body);
+    res.json(updated);
   } catch (err) {
     next(err);
   }
 });
 
-router.delete('/:id', mid.checkAccountId, (req, res, next) => {
+router.delete('/:id', mid.checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   try {
-    
+    await Accounts.deleteById(req.params.id);
+    res.json(req.account);
   } catch (err) {
     next(err);
   }

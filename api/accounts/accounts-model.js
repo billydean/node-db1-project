@@ -20,12 +20,12 @@ const create = async account => {
 
 const updateById = async (id, account) => {
   // update accounts set (... = ...) where x=z
-  db('accounts').where('id', id).update
+  return db('accounts').where('id', id).update(account)
 }
 
 const deleteById = id => {
   // delete from accounts where id='id'
-  return db('accounts').where('id', id).delete();
+  return db('accounts').where('id', id).del();
 }
 
 module.exports = {
